@@ -18,6 +18,7 @@ class a
     }
     public bool isUpperCase(char x)
     {
+        if (Char.ToLower(x) == Char.ToUpper(x)) Console.WriteLine("incorrect input");
         return x != Char.ToLower(x);
     }
     public bool isDivisor(int a, int b)
@@ -46,7 +47,7 @@ class a
     }
     public String age(int x)
     {
-        if (x < 0) return "negative age";
+        if (x < 0) return "incorrect";
         if (x > 10 && x < 15) return $"{x} лет";
         if (x % 10 == 1) return $"{x} год";
         if (x % 10 > 1 && x % 10 < 5) return $"{x} года";
@@ -86,7 +87,15 @@ class a
     public String reverseListNums(int x)
     {
         string s = "";
-        for (int i = x; i >= 0; i--)
+        if (x > 0)
+        {
+            for (int i = x; i >= 0; i--)
+            {
+                s = s + Convert.ToString(i) + " ";
+            }
+            return s;
+        }
+        for (int i = x; i <= 0; i++)
         {
             s = s + Convert.ToString(i) + " ";
         }
@@ -99,11 +108,13 @@ class a
         {
             c *= x;
         }
+        
         return c;
     }
     public bool equalNum(int x)
     {
         bool f = true;
+
         while (x / 10 > 1)
         {
             if (Math.Abs(x) % 10 != Math.Abs(x) % 100 / 10)
@@ -116,11 +127,12 @@ class a
     }
     public void leftTriangle(int x)
     {
+        if (x < 0) Console.WriteLine("incorrect input");
         for (int i = 1; i <= x; i++)
         {
             for (int i1 = 0; i1 < i; i1++)
             {
-                Console.Write("*");
+                Console.Write("* ");
             }
             Console.Write("\n");
         }
@@ -195,15 +207,15 @@ class a
         int n = 0, i1 = 0;
         foreach (int i in arr)
         {
-            if (i > 0) { n++; }
+            if (i >= 0) { n++; }
         }
         int[] arr1 = new int[n];
 
         for (int i = 0; i < arr.Length; i++)
         {
-            if (arr[i] > 0)
+            if (arr[i] >= 0)
             {
-                arr1[i] = arr[i1];
+                arr1[i1] = arr[i];
                 i1++;
                     }
         }
@@ -246,7 +258,7 @@ class a
 
                 case 3:
                     char s;
-                    Console.WriteLine("any character: ");
+                    Console.WriteLine("any letter: ");
                     s = Console.ReadLine()[0];
                     Console.WriteLine("upper case: " + a1.isUpperCase(s).ToString());
                     break;
@@ -273,12 +285,17 @@ class a
                         Console.Write($"{ns[i]} ");
                         if (i != 4) Console.Write("+ ");
                     }
+                    Console.Write("\n  ");
+                    Console.WriteLine(a1.lastNumSum(ns[0], ns[1]));
                     int t = a1.lastNumSum(ns[0], ns[1]);
                     for (int i = 2; i < 5; i++)
                     {
+                        for (int i1 = 0; i1 < i; i1++) Console.Write("    ");
                         t = a1.lastNumSum(ns[i], t);
+                        Console.Write(t);
+                        Console.WriteLine("\n");
                     }
-                    Console.WriteLine($"= {t}");
+                    Console.WriteLine($"result: {t}");
 
                     break;
 
@@ -317,7 +334,7 @@ class a
 
 
                 case 9:
-                    Console.WriteLine("any integer: ");
+                    Console.WriteLine("any positve integer: ");
                     n = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("age: " + a1.age(n));
                     break;
@@ -335,7 +352,7 @@ class a
                 case 11:
                     Console.WriteLine("any integer: ");
                     n = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("previous numbers:" + a1.reverseListNums(n));
+                    Console.WriteLine("numbers to zero: " + a1.reverseListNums(n));
                     break;
 
 
@@ -350,15 +367,15 @@ class a
 
 
 
-                case 13:
-                    Console.WriteLine("any integer: ");
+                case 14:
+                    Console.WriteLine("any positive integer: ");
                     n = Convert.ToInt32(Console.ReadLine());
                     a1.leftTriangle(n);
                     break;
 
 
 
-                case 14:
+                case 13:
                     Console.WriteLine("any integer: ");
                     n = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("equal numbers: " + a1.equalNum(n).ToString());
@@ -401,7 +418,7 @@ class a
                         Console.Write($"{ns1[i]} ");
                         if (i != n - 1) Console.Write(", ");
                     }
-                    Console.WriteLine("number to replace: ");
+                    Console.WriteLine("\nnumber to replace: ");
                     x = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("position to replace: ");
                     y = Convert.ToInt32(Console.ReadLine());
@@ -465,7 +482,7 @@ class a
                     rand = new Random();
                     for (int i = 0; i < n; i++)
                     {
-                        ns1[i] = rand.Next(100);
+                        ns1[i] = rand.Next(-100,100);
                         Console.Write($"{ns1[i]} ");
                         if (i != n - 1) Console.Write(", ");
                     }
@@ -484,6 +501,14 @@ class a
         catch (System.FormatException e)
         {
             Console.WriteLine("incorrect input");
+        }
+        catch (System.DivideByZeroException e)
+        {
+            Console.WriteLine("attempt to divide by zero");
+        }
+        catch (System.IndexOutOfRangeException e)
+        {
+            Console.WriteLine("incorrect index");
         }
     }
 }
