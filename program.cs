@@ -1,5 +1,5 @@
 using System;
-using System.Security.Cryptography;
+
 class a
 {
     public int sumLastNums(int x)
